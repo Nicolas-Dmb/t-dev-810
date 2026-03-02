@@ -1,0 +1,38 @@
+{
+    "versions": [
+        {
+            "2026-03-02T17:21:16.596950": {
+                "envs": {
+                    "TEST_SIZE": 0.2,
+                    "VAL_SIZE": 0.2,
+                    "IMG_SIZE": [
+                        256,
+                        256
+                    ],
+                    "MAX_ITER": 2000,
+                    "PROCESS": [
+                        "data_distribution",
+                        "normalize_img"
+                    ]
+                },
+                "results": {
+                    "accuracy": 0.9146757679180887,
+                    "confusion_matrix": {
+                        "TP": 808,
+                        "FP": 53,
+                        "TN": 264,
+                        "FN": 47
+                    },
+                    "cv_auc": [
+                        0.9739981612932184,
+                        0.0014490029527803754
+                    ],
+                    "recall": 0.9450292397660819,
+                    "train_auc": 1.0,
+                    "test_auc": 0.955142324792001
+                },
+                "model": "logistic_regression"
+            }
+        }
+    ]
+}
