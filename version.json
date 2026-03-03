@@ -1,38 +1,241 @@
 {
-    "versions": [
-        {
-            "2026-03-02T17:21:16.596950": {
-                "envs": {
-                    "TEST_SIZE": 0.2,
-                    "VAL_SIZE": 0.2,
-                    "IMG_SIZE": [
-                        256,
-                        256
-                    ],
-                    "MAX_ITER": 2000,
-                    "PROCESS": [
-                        "data_distribution",
-                        "normalize_img"
-                    ]
+    "versions": {
+        "2026-03-03T14:28:07.336452": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    256,
+                    256
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "normalize_img"
+                ]
+            },
+            "results": {
+                "accuracy": 0.9146757679180887,
+                "confusion_matrix": {
+                    "TP": 808,
+                    "FP": 53,
+                    "TN": 264,
+                    "FN": 47
                 },
-                "results": {
-                    "accuracy": 0.9146757679180887,
-                    "confusion_matrix": {
-                        "TP": 808,
-                        "FP": 53,
-                        "TN": 264,
-                        "FN": 47
-                    },
-                    "cv_auc": [
-                        0.9739981612932184,
-                        0.0014490029527803754
-                    ],
-                    "recall": 0.9450292397660819,
-                    "train_auc": 1.0,
-                    "test_auc": 0.955142324792001
+                "cv_auc": [
+                    0.9739981612932184,
+                    0.0014490029527803754
+                ],
+                "recall": 0.9450292397660819,
+                "train_auc": 1.0,
+                "test_auc": 0.955142324792001
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-03T14:42:06.082988": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    256,
+                    256
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_distribution_val",
+                    "normalize_img"
+                ]
+            },
+            "results": {
+                "accuracy": 0.7419871794871795,
+                "confusion_matrix": {
+                    "TP": 383,
+                    "FP": 154,
+                    "TN": 80,
+                    "FN": 7
                 },
-                "model": "logistic_regression"
-            }
+                "cv_auc": [
+                    0.9867600734110724,
+                    0.0029568016647641077
+                ],
+                "recall": 0.982051282051282,
+                "train_auc": 1.0,
+                "test_auc": 0.7543830813061582
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-03T14:46:41.773931": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    256,
+                    256
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_distribution_val",
+                    "normalize_img",
+                    "normalize_pixel"
+                ]
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 153,
+                    "TN": 81,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9890844813138877,
+                    0.0018326040887700066
+                ],
+                "recall": 0.9871794871794872,
+                "train_auc": 1.0,
+                "test_auc": 0.8952881875958799
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-03T14:53:41.147665": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    256,
+                    256
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_distribution_val",
+                    "normalize_img",
+                    "normalize_pixel"
+                ]
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 153,
+                    "TN": 81,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9890844813138877,
+                    0.0018326040887700066
+                ],
+                "recall": 0.9871794871794872,
+                "train_auc": 1.0,
+                "test_auc": 0.8952881875958799
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-03T15:58:38.571501": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    500,
+                    500
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_distribution_all",
+                    "normalize_img",
+                    "enhance_color"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5
+            },
+            "results": {
+                "accuracy": 0.924061433447099,
+                "confusion_matrix": {
+                    "TP": 818,
+                    "FP": 52,
+                    "TN": 265,
+                    "FN": 37
+                },
+                "cv_auc": [
+                    0.9781665031548167,
+                    0.002039253578798731
+                ],
+                "recall": 0.9567251461988304,
+                "train_auc": 1.0,
+                "test_auc": 0.9723947091704023
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-03T16:05:43.158186": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    500,
+                    500
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_distribution_val",
+                    "normalize_img",
+                    "enhance_color",
+                    "normalize_pixel"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5
+            },
+            "results": {
+                "accuracy": 0.7451923076923077,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 154,
+                    "TN": 80,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9891606796547625,
+                    0.0016992220947720628
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7142857142857143,
+                "f1_score": 0.828848223896663,
+                "train_auc": 1.0,
+                "test_auc": 0.8927021696252464
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-03T17:13:22.787274": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    500,
+                    500
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_distribution_val",
+                    "normalize_img",
+                    "enhance_color",
+                    "normalize_pixel"
+                ],
+                "ENHANCE_COLOR_FACTOR": 1.5
+            },
+            "results": {
+                "accuracy": 0.7371794871794872,
+                "confusion_matrix": {
+                    "TP": 384,
+                    "FP": 158,
+                    "TN": 76,
+                    "FN": 6
+                },
+                "cv_auc": [
+                    0.9875345195742113,
+                    0.0011455048402219698
+                ],
+                "recall": 0.9846153846153847,
+                "precision": 0.7084870848708487,
+                "f1_score": 0.8240343347639485,
+                "train_auc": 1.0,
+                "test_auc": 0.8734166118781503
+            },
+            "model": "logistic_regression"
         }
-    ]
+    }
 }
