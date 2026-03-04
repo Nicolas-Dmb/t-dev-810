@@ -236,6 +236,148 @@
                 "test_auc": 0.8734166118781503
             },
             "model": "logistic_regression"
+        },
+        "2026-03-04T15:40:51.474641": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    255,
+                    255
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5
+            },
+            "results": {
+                "accuracy": 0.7948717948717948,
+                "confusion_matrix": {
+                    "TP": 382,
+                    "FP": 120,
+                    "TN": 114,
+                    "FN": 8
+                },
+                "cv_auc": [
+                    0.984690284720713,
+                    0.002177114911942747
+                ],
+                "recall": 0.9794871794871794,
+                "precision": 0.7609561752988048,
+                "f1_score": 0.8565022421524665,
+                "train_auc": 1.0,
+                "test_auc": 0.814595660749507
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-04T16:46:32.898948": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    255,
+                    255
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5
+            },
+            "results": {
+                "accuracy": 0.7948717948717948,
+                "confusion_matrix": {
+                    "TP": 382,
+                    "FP": 120,
+                    "TN": 114,
+                    "FN": 8
+                },
+                "cv_auc": [
+                    0.984690284720713,
+                    0.002177114911942747
+                ],
+                "recall": 0.9794871794871794,
+                "precision": 0.7609561752988048,
+                "f1_score": 0.8565022421524665,
+                "train_auc": 1.0,
+                "test_auc": 0.814595660749507
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-04T16:58:30.586683": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    255,
+                    255
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img",
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5
+            },
+            "results": {
+                "accuracy": 0.7948717948717948,
+                "confusion_matrix": {
+                    "TP": 382,
+                    "FP": 120,
+                    "TN": 114,
+                    "FN": 8
+                },
+                "cv_auc": [
+                    0.984690284720713,
+                    0.002177114911942747
+                ],
+                "recall": 0.9794871794871794,
+                "precision": 0.7609561752988048,
+                "f1_score": 0.8565022421524665,
+                "train_auc": 1.0,
+                "test_auc": 0.814595660749507
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-04T17:56:49.185695": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
         }
     }
 }
