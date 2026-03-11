@@ -6,8 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image, ImageEnhance
 
-from src.config import PROCESS_TYPE, Config
-from src.model import ImageFile
+from t_dev_810.config import PROCESS_TYPE, Config
+from t_dev_810.utils.model import ImageFile
 
 datasets = ("Test", "Train", "Val")
 

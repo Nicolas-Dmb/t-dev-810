@@ -2,6 +2,8 @@ import enum
 from dataclasses import dataclass
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
 
 class PROCESS_TYPE(enum.Enum):
     data_distribution = "data_distribution"
@@ -53,14 +55,15 @@ class DatasetPaths:
 
     @staticmethod
     def load() -> "DatasetPaths":
-        test_normal_imgs = Path("test/NORMAL")
-        test_pneumonia_imgs = Path("test/PNEUMONIA")
+        relative_path = "../datas"
+        test_normal_imgs = Path(relative_path + "/test/NORMAL")
+        test_pneumonia_imgs = Path(relative_path + "/test/PNEUMONIA")
 
-        train_normal_imgs = Path("train/NORMAL")
-        train_pneumonia_imgs = Path("train/PNEUMONIA")
+        train_normal_imgs = Path(relative_path + "/train/NORMAL")
+        train_pneumonia_imgs = Path(relative_path + "/train/PNEUMONIA")
 
-        val_normal_imgs = Path("val/NORMAL")
-        val_pneumonia_imgs = Path("val/PNEUMONIA")
+        val_normal_imgs = Path(relative_path + "/val/NORMAL")
+        val_pneumonia_imgs = Path(relative_path + "/val/PNEUMONIA")
         return DatasetPaths(
             test_normal_paths=list(test_normal_imgs.glob("*.jpeg")),
             test_pneumonia_paths=list(test_pneumonia_imgs.glob("*.jpeg")),
@@ -71,15 +74,15 @@ class DatasetPaths:
         )
 
     @staticmethod
-    def load_from_dataset() -> "DatasetPaths":
-        test_normal_imgs = Path("dataset/test/NORMAL")
-        test_pneumonia_imgs = Path("dataset/test/PNEUMONIA")
+    def load_from_dataset(path: str = "./pre_processing") -> "DatasetPaths":
+        test_normal_imgs = Path(path + "/dataset/test/NORMAL")
+        test_pneumonia_imgs = Path(path + "/dataset/test/PNEUMONIA")
 
-        train_normal_imgs = Path("dataset/train/NORMAL")
-        train_pneumonia_imgs = Path("dataset/train/PNEUMONIA")
+        train_normal_imgs = Path(path + "/dataset/train/NORMAL")
+        train_pneumonia_imgs = Path(path + "/dataset/train/PNEUMONIA")
 
-        val_normal_imgs = Path("dataset/val/NORMAL")
-        val_pneumonia_imgs = Path("dataset/val/PNEUMONIA")
+        val_normal_imgs = Path(path + "/dataset/val/NORMAL")
+        val_pneumonia_imgs = Path(path + "/dataset/val/PNEUMONIA")
         return DatasetPaths(
             test_normal_paths=list(test_normal_imgs.glob("*.jpeg")),
             test_pneumonia_paths=list(test_pneumonia_imgs.glob("*.jpeg")),

@@ -7,7 +7,7 @@ from numpy import ndarray
 from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score
 from sklearn.model_selection import cross_val_score
 
-from src.config import PROCESS_TYPE, Config
+from t_dev_810.config import PROCESS_TYPE, Config
 
 
 def extract_dataset_process() -> List[PROCESS_TYPE]:
@@ -92,7 +92,7 @@ def evaluate_model(
 
 
 def _register_result(envs_dict: Dict[str, Any], result_dict: Dict[str, Any]) -> None:
-    with open("version.json", "r+") as f:
+    with open("./version.json", "r+") as f:
         file = f.read()
         if file.strip():
             version_data = json.loads(file)

@@ -3,7 +3,7 @@ from pathlib import Path
 from sklearn.model_selection import train_test_split
 
 from t_dev_810.config import PROCESS_TYPE, Config
-from t_dev_810.model import ImageFile
+from t_dev_810.utils.model import ImageFile
 
 
 def data_splitting(
