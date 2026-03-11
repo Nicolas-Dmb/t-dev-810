@@ -22,7 +22,9 @@ def evaluate_model(
 
     cm = confusion_matrix(y_test, y_pred)
 
-    scores = cross_val_score(model, X_train, y_train, cv=5, scoring="roc_auc")
+    scores = cross_val_score(
+        model, X_train, y_train, cv=5, scoring="roc_auc", n_jobs=-1
+    )
 
     fn = cm[1, 0]
     tp = cm[1, 1]

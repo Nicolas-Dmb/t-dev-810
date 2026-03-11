@@ -378,6 +378,640 @@
                 "test_auc": 0.8320238877931185
             },
             "model": "logistic_regression"
+        },
+        "2026-03-09T13:29:55.348274": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-09T13:31:35.698113": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-09T13:32:57.248753": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-09T13:34:04.655740": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-09T18:32:55.568230": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.7548076923076923,
+                "confusion_matrix": {
+                    "TP": 384,
+                    "FP": 147,
+                    "TN": 87,
+                    "FN": 6
+                },
+                "cv_auc": [
+                    0.9864028935041649,
+                    0.0016149151625883468
+                ],
+                "recall": 0.9846153846153847,
+                "precision": 0.7231638418079096,
+                "f1_score": 0.8338762214983714,
+                "test_auc": 0.8872890642121412
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-10T11:15:11.343732": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "test best hyperparameters found with grid search"
+            },
+            "results": {
+                "accuracy": 0.7580128205128205,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 146,
+                    "TN": 88,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9877002103635386,
+                    0.0015814361797474741
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7250470809792844,
+                "f1_score": 0.8360477741585234,
+                "test_auc": 0.8913762875301336
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:21:58.133945": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:23:02.413292": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:29:50.976659": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:31:32.370902": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:32:35.224267": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:33:22.312960": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:35:49.282555": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:40:04.429836": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 5
+                },
+                "cv_auc": [
+                    0.9858145357153685,
+                    0.0017608661452865298
+                ],
+                "recall": 0.9871794871794872,
+                "precision": 0.7182835820895522,
+                "f1_score": 0.8315334773218144,
+                "test_auc": 0.8320238877931185
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:41:32.151231": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.7435897435897436,
+                "confusion_matrix": {
+                    "TP": 377,
+                    "FP": 147,
+                    "TN": 87,
+                    "FN": 13
+                },
+                "cv_auc": [
+                    0.9591083140993453,
+                    0.004996566209462977
+                ],
+                "recall": 0.9666666666666667,
+                "precision": 0.7194656488549618,
+                "f1_score": 0.8249452954048139,
+                "test_auc": 0.8111713784790708
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T11:42:31.212235": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "img_cropping",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 383,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 7
+                },
+                "cv_auc": [
+                    0.9797311343145376,
+                    0.002676332136364944
+                ],
+                "recall": 0.982051282051282,
+                "precision": 0.7172284644194756,
+                "f1_score": 0.8290043290043289,
+                "test_auc": 0.8282599167214552
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T13:19:31.986814": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "img_cropping",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 383,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 7
+                },
+                "cv_auc": [
+                    0.9797311343145376,
+                    0.002676332136364944
+                ],
+                "recall": 0.982051282051282,
+                "precision": 0.7172284644194756,
+                "f1_score": 0.8290043290043289,
+                "test_auc": 0.8282599167214552
+            },
+            "model": "logistic_regression"
+        },
+        "2026-03-11T13:26:07.873693": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [
+                    "data_splitting_test_val",
+                    "img_cropping",
+                    "normalize_img"
+                ],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "try to limit overfitting with smallest image size and only splitting test and val set"
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 383,
+                    "FP": 151,
+                    "TN": 83,
+                    "FN": 7
+                },
+                "cv_auc": [
+                    0.9797311343145376,
+                    0.002676332136364944
+                ],
+                "recall": 0.982051282051282,
+                "precision": 0.7172284644194756,
+                "f1_score": 0.8290043290043289,
+                "test_auc": 0.8282599167214552
+            },
+            "model": "logistic_regression"
         }
     }
 }

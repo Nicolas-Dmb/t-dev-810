@@ -10,12 +10,13 @@ class PROCESS_TYPE(enum.Enum):
     normalize_pixel = "normalize_pixel"
     enhance_color = "enhance_color"
     data_splitting_label = "data_splitting_label"
+    grid_search = "grid_search"
+    img_cropping = "img_cropping"
 
 
 class MODEL_TYPE(enum.Enum):
     logistic_regression = "logistic_regression"
     random_forest = "random_forest"  # Not implemented yet
-    svm = "svm"  # Not implemented yet
 
 
 @dataclass
