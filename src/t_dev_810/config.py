@@ -4,8 +4,7 @@ from pathlib import Path
 
 
 class PROCESS_TYPE(enum.Enum):
-    data_spliting_category = "data_spliting_category"
-    data_splitting_test_val = "data_splitting_test_val"
+    data_distribution = "data_distribution"
     normalize_img = "normalize_img"
     normalize_pixel = "normalize_pixel"
     enhance_color = "enhance_color"
@@ -36,7 +35,7 @@ class Config:
         return Config(
             PROCESSED=[],
             PROCESS=[
-                PROCESS_TYPE.data_splitting_test_val,
+                PROCESS_TYPE.data_distribution,
                 PROCESS_TYPE.normalize_img,
                 PROCESS_TYPE.data_splitting_label,
             ],
@@ -62,6 +61,25 @@ class DatasetPaths:
 
         val_normal_imgs = Path("val/NORMAL")
         val_pneumonia_imgs = Path("val/PNEUMONIA")
+        return DatasetPaths(
+            test_normal_paths=list(test_normal_imgs.glob("*.jpeg")),
+            test_pneumonia_paths=list(test_pneumonia_imgs.glob("*.jpeg")),
+            train_normal_paths=list(train_normal_imgs.glob("*.jpeg")),
+            train_pneumonia_paths=list(train_pneumonia_imgs.glob("*.jpeg")),
+            val_normal_paths=list(val_normal_imgs.glob("*.jpeg")),
+            val_pneumonia_paths=list(val_pneumonia_imgs.glob("*.jpeg")),
+        )
+
+    @staticmethod
+    def load_from_dataset() -> "DatasetPaths":
+        test_normal_imgs = Path("dataset/test/NORMAL")
+        test_pneumonia_imgs = Path("dataset/test/PNEUMONIA")
+
+        train_normal_imgs = Path("dataset/train/NORMAL")
+        train_pneumonia_imgs = Path("dataset/train/PNEUMONIA")
+
+        val_normal_imgs = Path("dataset/val/NORMAL")
+        val_pneumonia_imgs = Path("dataset/val/PNEUMONIA")
         return DatasetPaths(
             test_normal_paths=list(test_normal_imgs.glob("*.jpeg")),
             test_pneumonia_paths=list(test_pneumonia_imgs.glob("*.jpeg")),

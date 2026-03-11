@@ -1,12 +1,38 @@
 import json
 from datetime import datetime
+from pathlib import Path
 from typing import Any, Dict, List
 
 from numpy import ndarray
 from sklearn.metrics import accuracy_score, confusion_matrix, roc_auc_score
 from sklearn.model_selection import cross_val_score
 
-from config import Config
+from src.config import PROCESS_TYPE, Config
+
+
+def extract_dataset_process() -> List[PROCESS_TYPE]:
+    if not Path("dataset/version.json").exists():
+        return []
+    with open("dataset/version.json", "r") as f:
+        json_data = json.load(f)
+        return [PROCESS_TYPE(process) for process in json_data.get("PROCESSED", [])]
+
+
+def dataset_process_register(config: Config) -> None:
+    if not Path("dataset/version.json").exists():
+        with open("dataset/version.json", "w") as f:
+            json_data: dict[str, list[str]] = {
+                "PROCESSED": [process.value for process in config.PROCESSED],
+            }
+            json.dump(json_data, f, indent=4)
+    else:
+        with open("dataset/version.json", "w") as f:
+            f.seek(0)
+            f.truncate()
+            json_data: dict[str, list[str]] = {
+                "PROCESSED": [process.value for process in config.PROCESSED],
+            }
+            json.dump(json_data, f, indent=4)
 
 
 def evaluate_model(
