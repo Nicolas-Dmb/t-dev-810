@@ -254,6 +254,39 @@ I tried to reduce overfitting by tuning the logistic regression hyperparameters:
 
 This experiment slightly reduced overfitting, but the difference between training and test performance remained large. In addition, recall dropped compared with previous experiments, which is a problem for pneumonia detection.
 
+
+
+---
+## Experiment 7
+
+### Hypothesis
+
+To reduce overfitting, I applied **Principal Component Analysis (PCA)** to reduce the number of features.  
+By compressing the original pixel space into a smaller set of principal components, the model may generalize better and rely less on noisy or redundant information.
+
+### Parameters
+
+- PCA components: **100**
+- penalty: **L1**
+- class_weight: **balanced**
+- C: **1**
+
+### Results
+
+- Accuracy: **0.743**
+- AUC: **0.888**
+- Recall: **0.982**
+- Precision: **0.714**
+- F1-score: **0.827**
+- Train AUC: **0.985**
+
+### Analysis
+
+Applying PCA slightly reduced overfitting, but the difference between training and test performance remained significant.  
+While the model still detects most pneumonia cases (high recall), the overall performance did not significantly improve compared to previous experiments.
+
+This suggests that dimensionality reduction alone is not sufficient to solve the overfitting issue in this dataset.
+
 ---
 
 # Conclusion
@@ -288,3 +321,4 @@ This suggests that logistic regression is probably too limited for this image cl
 | 4 | 64–500 | Resize + contrast | None | - | - | - | - | - | - |
 | 5 | 256x256 | Crop 10% | None | 0.746 | 0.828 | 0.982 | 0.717 | 0.829 | 0.979 |
 | 6 | 256x256 | Normalization | L2 + balanced | 0.750 | 0.893 | 0.719 | 0.717 | 0.831 | 0.987 |
+| 7 | 128x128 | Normalization & PCA | L2 + balanced | 0.74 | 0.88 | 0.98 | 0.71 | 0.82 | 0.98 | 

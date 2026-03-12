@@ -13,6 +13,7 @@ class PROCESS_TYPE(enum.Enum):
     data_splitting_label = "data_splitting_label"
     grid_search = "grid_search"
     img_cropping = "img_cropping"
+    pca = "pca"
 
 
 class MODEL_TYPE(enum.Enum):
@@ -31,6 +32,7 @@ class Config:
     ENHANCE_COLOR_FACTOR: float = 0.5
     MODEL: MODEL_TYPE = MODEL_TYPE.logistic_regression
     MESSAGE: str = ""
+    PCA_COMPONENTS: int = 100
 
     @staticmethod
     def default() -> "Config":
