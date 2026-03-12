@@ -19,13 +19,19 @@ The class distribution is unbalanced. The training set contains many more images
 
 The validation set is particularly small, with only a few images per class, which makes it difficult to use reliably for model selection.
 
+![Distribution](static/data_distribution.png)
+
 ## Image Sizes
 
 The images do not all have the same dimensions, so they cannot be used directly by a standard machine learning model.
+![Sizes](static/data_size.png)
+
 
 ## Example Image
 
 Each image is a grayscale chest radiograph.
+![Example](static/IM-0005-0001.jpeg)
+
 
 ---
 
@@ -38,6 +44,9 @@ Before training the model, several preprocessing steps are required.
 The original validation set is too small to be representative. To obtain a more reliable validation dataset, part of the training set is moved into the validation set.
 
 The test set must remain untouched, since it is supposed to represent unseen data used only for final evaluation.
+
+![Rebalancing](static/data_fix_distribution.png)
+
 
 ## 2. Resizing Images
 
