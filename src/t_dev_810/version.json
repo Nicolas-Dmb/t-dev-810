@@ -1046,6 +1046,38 @@
                 "test_auc": 0.8243096646942801
             },
             "model": "logistic_regression"
+        },
+        "2026-03-12T11:39:02.001182": {
+            "envs": {
+                "TEST_SIZE": 0.2,
+                "VAL_SIZE": 0.2,
+                "IMG_SIZE": [
+                    64,
+                    64
+                ],
+                "MAX_ITER": 2000,
+                "PROCESS": [],
+                "ENHANCE_COLOR_FACTOR": 0.5,
+                "MESSAGE": "code refacto"
+            },
+            "results": {
+                "accuracy": 0.75,
+                "confusion_matrix": {
+                    "TP": 384,
+                    "FP": 150,
+                    "TN": 84,
+                    "FN": 6
+                },
+                "cv_auc": [
+                    0.9877261008002,
+                    0.005273463624664417
+                ],
+                "recall": 0.9846153846153847,
+                "precision": 0.7191011235955056,
+                "f1_score": 0.8311688311688311,
+                "test_auc": 0.8931569143107606
+            },
+            "model": "logistic_regression"
         }
     }
 }

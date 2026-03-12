@@ -1,7 +1,6 @@
 {
     "PROCESSED": [
         "normalize_img",
-        "img_cropping",
         "data_distribution"
     ]
 }

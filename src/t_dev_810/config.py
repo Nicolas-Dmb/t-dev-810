@@ -108,11 +108,11 @@ logistic_regression_params = [
         "C": [0.01, 0.1, 1, 10],
         "class_weight": [None, "balanced"],
     },
-    {
-        "solver": ["saga"],
-        "max_iter": [6000],
-        "l1_ratio": [0, 0.5, 1],
-        "C": [0.01, 0.1, 1],
-        "class_weight": [None, "balanced"],
-    },
+    # {
+    #     "solver": ["saga"],
+    #     "max_iter": [6000],
+    #     "l1_ratio": [0, 0.5, 1],
+    #     "C": [0.01, 0.1, 1],
+    #     "class_weight": [None, "balanced"],
+    # },
 ]
