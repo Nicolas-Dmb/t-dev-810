@@ -91,3 +91,28 @@ class DatasetPaths:
             val_normal_paths=list(val_normal_imgs.glob("*.jpeg")),
             val_pneumonia_paths=list(val_pneumonia_imgs.glob("*.jpeg")),
         )
+
+
+logistic_regression_params = [
+    {
+        "solver": ["lbfgs"],
+        "max_iter": [2000],
+        "l1_ratio": [0],
+        "C": [0.01, 0.1, 1, 10],
+        "class_weight": [None, "balanced"],
+    },
+    {
+        "solver": ["liblinear"],
+        "max_iter": [2000],
+        "l1_ratio": [0, 1],
+        "C": [0.01, 0.1, 1, 10],
+        "class_weight": [None, "balanced"],
+    },
+    {
+        "solver": ["saga"],
+        "max_iter": [6000],
+        "l1_ratio": [0, 0.5, 1],
+        "C": [0.01, 0.1, 1],
+        "class_weight": [None, "balanced"],
+    },
+]
