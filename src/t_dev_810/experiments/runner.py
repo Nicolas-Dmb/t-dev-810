@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Callable
+from typing import Any, Callable
 
 from t_dev_810.data import (
     DatasetFile,
@@ -16,7 +16,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 CSV_PATH = PROJECT_ROOT / "experiments.csv"
 
-PreprocessStep = Callable[[DatasetFile], DatasetFile]
+PreprocessStep = Callable[[DatasetFile], Any]
 
 
 def runner(experiment_conf: ExperimentConf | GridSearchConf):
@@ -28,7 +28,7 @@ def runner(experiment_conf: ExperimentConf | GridSearchConf):
 def _preprocess(
     experiment_conf: ExperimentConf | GridSearchConf,
     dataset_file: DatasetFile,
-) -> DatasetFile:
+) -> DatasetFile | DatasetImg:
     pipeline = build_preprocess_pipeline(experiment_conf)
 
     for step in pipeline:
@@ -47,19 +47,18 @@ def build_preprocess_pipeline(
     # Load dataset as images
     pipeline.append(lambda dataset: load_image(dataset))
 
+    pipeline.append(
+        lambda dataset: resize_img(
+            dataset,
+            image_size=experiment_conf.image_size,
+        )
+    )
+
     if experiment_conf.crop_factor > 0:
         pipeline.append(
             lambda dataset: cropping(
                 dataset,
                 crop_factor=experiment_conf.crop_factor,
-            )
-        )
-
-    if experiment_conf.image_size is not None:
-        pipeline.append(
-            lambda dataset: resize_img(
-                dataset,
-                image_size=experiment_conf.image_size,
             )
         )
 

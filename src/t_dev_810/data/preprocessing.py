@@ -3,9 +3,14 @@ from ast import List
 from .schema import DatasetImg, ImageFile
 
 
-def resize_img(size: int):
-    # TODO
-    pass
+def resize_img(dataset: DatasetImg, image_size: int) -> DatasetImg:
+    """Resize the image to the given size."""
+    
+    return DatasetImg(
+        test=[ImageFile(data=img_file.data.resize((image_size, image_size)), label=img_file.label) for img_file in dataset.test],
+        train=[ImageFile(data=img_file.data.resize((image_size, image_size)), label=img_file.label) for img_file in dataset.train],
+        val=[ImageFile(data=img_file.data.resize((image_size, image_size)), label=img_file.label) for img_file in dataset.val],
+    )
 
 
 # TODO ; restart hir
