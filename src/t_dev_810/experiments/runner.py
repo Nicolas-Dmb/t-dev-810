@@ -1,13 +1,22 @@
 from pathlib import Path
-from typing import Callable, Optional, Dict
+from typing import Callable
 
-from t_dev_810.data import DatasetFile, load, resize_img, data_splitting, cropping
+from t_dev_810.data import (
+    DatasetFile,
+    cropping,
+    data_splitting,
+    load,
+    load_image,
+    resize_img,
+)
 
-from .schema import ExperimentConf, GridSearchConf 
+from .schema import ExperimentConf, GridSearchConf
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 CSV_PATH = PROJECT_ROOT / "experiments.csv"
+
+PreprocessStep = Callable[[DatasetFile], DatasetFile]
 
 
 def runner(experiment_conf: ExperimentConf | GridSearchConf):
@@ -17,25 +26,47 @@ def runner(experiment_conf: ExperimentConf | GridSearchConf):
 
 
 def _preprocess(
-    experiment_conf: ExperimentConf | GridSearchConf, dataset_file: DatasetFile
-):
-    
+    experiment_conf: ExperimentConf | GridSearchConf,
+    dataset_file: DatasetFile,
+) -> DatasetFile:
+    pipeline = build_preprocess_pipeline(experiment_conf)
 
-def processing_callable(function:Callable, dataset_file: DatasetFile):
+    for step in pipeline:
+        dataset_file = step(dataset_file)
+
+    return dataset_file
 
 
-def mapper(experiment_conf: ExperimentConf | GridSearchConf, dataset_file: DatasetFile) -> Dict[str, Optional[Callable]]:
-    return {
-        'data_splitting': data_splitting,
-        'image_size':resize_img,
-        'cropping': 
-        'pca_components': 
-        
+def build_preprocess_pipeline(
+    experiment_conf: ExperimentConf | GridSearchConf,
+) -> list[PreprocessStep]:
+    pipeline: list[PreprocessStep] = []
 
-    }
-    
+    pipeline.append(lambda dataset: data_splitting(dataset))
 
-def test(dataset_file: DatasetFile)->DatasetFile:
+    # Load dataset as images
+    pipeline.append(lambda dataset: load_image(dataset))
+
+    if experiment_conf.crop_factor > 0:
+        pipeline.append(
+            lambda dataset: cropping(
+                dataset,
+                crop_factor=experiment_conf.crop_factor,
+            )
+        )
+
+    if experiment_conf.image_size is not None:
+        pipeline.append(
+            lambda dataset: resize_img(
+                dataset,
+                image_size=experiment_conf.image_size,
+            )
+        )
+
+    return pipeline
+
+
+def test(dataset_file: DatasetFile) -> DatasetFile:
     return dataset_file
 
 
