@@ -25,6 +25,7 @@ class ExperimentConf:
     normalize: bool
     pca_components: Optional[int]
     crop_factor: int
+    enhance_factor: int
     model: Model
     penalty: Penalty
     solver: Solver
@@ -40,6 +41,7 @@ class GridSearchConf:
     image_size: int
     normalize: bool
     pca_components: Optional[int]
+    enhance_factor: int
     crop_factor: int
     hypothesis: str
     conf: List[Dict[str, Any]]
@@ -48,6 +50,7 @@ class GridSearchConf:
     def from_quizz(
         image_size: int,
         normalize_pixel: bool,
+        enhance_factor: int,
         pca: Optional[int],
         crop_factor: int,
         hypothesis: str,
@@ -65,6 +68,7 @@ class GridSearchConf:
             model=model,
             image_size=image_size,
             normalize=normalize_pixel,
+            enhance_factor=enhance_factor,
             pca_components=pca,
             crop_factor=crop_factor,
             hypothesis=hypothesis,

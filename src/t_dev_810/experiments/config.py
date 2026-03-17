@@ -39,14 +39,17 @@ def build_config() -> ExperimentConf | GridSearchConf:
 
     crop_factor = ask_int("Crop factor", 0)
 
+    enhance_factor = ask_int("Enhance factor", 0)
+
     experiment_type = ask_bool("Is it GridSearch experiment ?", False)
     if experiment_type:
         hypothesis = input("Experiment hypothesis: ").strip()
         return GridSearchConf.from_quizz(
-            image_size,
-            normalize,
-            pca_components,
+            image_size=image_size,
+            normalize_pixel=normalize,
+            pca=pca_components,
             crop_factor=crop_factor,
+            enhance_factor=enhance_factor,
             hypothesis=hypothesis,
         )
 
@@ -70,6 +73,7 @@ def build_config() -> ExperimentConf | GridSearchConf:
         image_size=image_size,
         normalize=normalize,
         pca_components=pca_components,
+        enhance_factor=enhance_factor,
         crop_factor=crop_factor,
         model=Model.logistic_regression,
         penalty=Penalty.elasticnet,  # TODO : find correct value

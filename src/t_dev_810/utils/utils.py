@@ -53,17 +53,6 @@ def display_distribution(
     plt.show()
 
 
-def dataset_checker(X: List[Path], y: List[int]):
-    assert len(X) == len(y), "The number of samples in X and y must be the same."
-    for img_path, label in zip(X, y):
-        if img_path.parent.name == "NORMAL":
-            assert label == 0, f"Expected label 0 for NORMAL image, got {label}."
-        elif img_path.parent.name == "PNEUMONIA":
-            assert label == 1, f"Expected label 1 for PNEUMONIA image, got {label}."
-        else:
-            raise ValueError(f"Unexpected directory name: {img_path.parent.name}")
-
-
 def init_dataset():
     """Initialize the dataset by creating a new folder and cleaning it if it already exists."""
     dataset_path = Path("dataset/")
@@ -73,24 +62,11 @@ def init_dataset():
     dataset_path.mkdir(parents=True, exist_ok=True)
 
 
-def cropping(img_file: ImageFile) -> ImageFile:
-    """Crop the image by removing 10% of the width and height from each side."""
-    width, height = img_file.img.size
-
-    margin_w = width * 0.1
-    margin_h = height * 0.1
-
-    return ImageFile(
-        img_file.img.crop((margin_w, margin_h, width - margin_w, height - margin_h)),
-        img_file.path,
-    )
-
-
 def enhance_contrast(imgs: List[ImageFile], factor: float) -> List[ImageFile]:
     """Enhance the contrast of the images by a given factor."""
 
     return [
-        ImageFile(ImageEnhance.Contrast(img.img).enhance(factor), img.path)
+        ImageFile(ImageEnhance.Contrast(img.img).enhance(factor), img.label)
         for img in imgs
     ]
 

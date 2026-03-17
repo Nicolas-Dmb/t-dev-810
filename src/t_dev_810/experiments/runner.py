@@ -3,10 +3,14 @@ from typing import Any, Callable
 
 from t_dev_810.data import (
     DatasetFile,
-    cropping,
+    crop_dataset,
     data_splitting,
+    enhance_constrast,
+    flatten_image,
     load,
     load_image,
+    normalize_pixel,
+    pca,
     resize_img,
 )
 
@@ -56,11 +60,33 @@ def build_preprocess_pipeline(
 
     if experiment_conf.crop_factor > 0:
         pipeline.append(
-            lambda dataset: cropping(
+            lambda dataset: crop_dataset(
                 dataset,
                 crop_factor=experiment_conf.crop_factor,
             )
         )
+
+    if experiment_conf.enhance_factor > 0:
+        pipeline.append(
+            lambda dataset: enhance_constrast(
+                dataset,
+                enhance_factor=experiment_conf.enhance_factor,
+            )
+        )
+
+    # Load flatten Image
+    pipeline.append(lambda dataset: flatten_image(dataset))
+
+    if experiment_conf.pca_components is not None:
+        pipeline.append(
+            lambda dataset: pca(
+                dataset,
+                n_components=experiment_conf.pca_components,
+            )
+        )
+
+    if experiment_conf.normalize:
+        pipeline.append(lambda dataset: normalize_pixel(dataset=dataset))
 
     return pipeline
 
