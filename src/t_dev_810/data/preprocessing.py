@@ -1,4 +1,3 @@
-import numpy as np
 from PIL import ImageEnhance
 from sklearn.decomposition import PCA
 
@@ -53,33 +52,6 @@ def _cropping(img: ImageFile, crop_factor: int) -> ImageFile:
             )
         ),
         label=img.label,
-    )
-
-
-def flatten_image(dataset: DatasetImg) -> DatasetData:
-    """Flatten the image to a 1D array."""
-    return DatasetData(
-        test=[
-            ImageData(
-                data=np.array(img_file.data).flatten(),
-                label=img_file.label,
-            )
-            for img_file in dataset.test
-        ],
-        train=[
-            ImageData(
-                data=np.array(img_file.data).flatten(),
-                label=img_file.label,
-            )
-            for img_file in dataset.train
-        ],
-        val=[
-            ImageData(
-                data=np.array(img_file.data).flatten(),
-                label=img_file.label,
-            )
-            for img_file in dataset.val
-        ],
     )
 
 

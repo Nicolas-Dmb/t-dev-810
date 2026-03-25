@@ -33,7 +33,16 @@ def load() -> DatasetFile:
 def load_image(dataset_file: DatasetFile) -> DatasetImg:
     print("loading image in dataset ...")
     return DatasetImg(
-        [ImageFile(data=Image.open(str(p)), label=p.label) for p in dataset_file.test],
-        [ImageFile(data=Image.open(str(p)), label=p.label) for p in dataset_file.train],
-        [ImageFile(data=Image.open(str(p)), label=p.label) for p in dataset_file.val],
+        [
+            ImageFile(data=Image.open(str(p)).convert("L"), label=p.label)
+            for p in dataset_file.test
+        ],
+        [
+            ImageFile(data=Image.open(str(p)).convert("L"), label=p.label)
+            for p in dataset_file.train
+        ],
+        [
+            ImageFile(data=Image.open(str(p)).convert("L"), label=p.label)
+            for p in dataset_file.val
+        ],
     )

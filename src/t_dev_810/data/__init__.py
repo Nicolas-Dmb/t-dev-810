@@ -3,8 +3,9 @@ from .loader import load as load
 from .loader import load_image as load_image
 from .preprocessing import crop_dataset as crop_dataset
 from .preprocessing import enhance_constrast as enhance_constrast
-from .preprocessing import flatten_image as flatten_image
 from .preprocessing import normalize_pixel as normalize_pixel
 from .preprocessing import pca as pca
 from .preprocessing import resize_img as resize_img
+from .schema import DatasetData as DatasetData
+from .schema import ImageData as ImageData
 from .splitting import data_splitting as data_splitting
