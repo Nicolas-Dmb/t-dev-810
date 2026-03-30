@@ -32,7 +32,25 @@ class ExperimentConf:
     l1_ratio: Optional[float]  # between 0 and 1
     regularization_c: float  # between 0 and 100
     class_weight: bool
+    max_iter: int
     hypothesis: str
+
+    def to_json(self) -> Dict[str, Any]:
+        return {
+            "image_size": self.image_size,
+            "normalize": self.normalize,
+            "pca_components": self.pca_components,
+            "crop_factor": self.crop_factor,
+            "enhance_factor": self.enhance_factor,
+            "model": self.model.value,
+            "penalty": self.penalty.value,
+            "solver": self.solver.value,
+            "l1_ratio": self.l1_ratio,
+            "regularization_c": self.regularization_c,
+            "class_weight": self.class_weight,
+            "max_iter": self.max_iter,
+            "hypothesis": self.hypothesis,
+        }
 
 
 @dataclass
@@ -74,6 +92,23 @@ class GridSearchConf:
             hypothesis=hypothesis,
             conf=gridsearch_conf,
         )
+
+    def to_json(self, best_params: Dict[str, Any]) -> Dict[str, Any]:
+        return {
+            "image_size": self.image_size,
+            "normalize": self.normalize,
+            "pca_components": self.pca_components,
+            "crop_factor": self.crop_factor,
+            "enhance_factor": self.enhance_factor,
+            "model": self.model.value,
+            "penalty": best_params.get("penalty"),
+            "solver": best_params.get("solver"),
+            "l1_ratio": best_params.get("l1_ratio"),
+            "regularization_c": best_params.get("C"),
+            "class_weight": best_params.get("class_weight"),
+            "max_iter": best_params.get("max_iter"),
+            "hypothesis": self.hypothesis,
+        }
 
 
 LOGISTIC_REG_GRIDSEARCH_CONF = [

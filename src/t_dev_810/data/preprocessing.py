@@ -1,3 +1,4 @@
+import numpy as np
 from PIL import ImageEnhance
 from sklearn.decomposition import PCA
 
@@ -56,30 +57,31 @@ def _cropping(img: ImageFile, crop_factor: int) -> ImageFile:
 
 
 def pca(dataset: DatasetData, n_components: int) -> DatasetData:
-    """Apply PCA to the dataset."""
-    pca = PCA(n_components=n_components)
+    """Apply PCA on the whole dataset using train split only."""
+
+    X_train = np.array([img.data for img in dataset.train])
+    y_train = [img.label for img in dataset.train]
+
+    X_val = np.array([img.data for img in dataset.val])
+    y_val = [img.label for img in dataset.val]
+
+    X_test = np.array([img.data for img in dataset.test])
+    y_test = [img.label for img in dataset.test]
+
+    pca_model = PCA(n_components=n_components)
+
+    X_train_pca = pca_model.fit_transform(X_train)
+    X_val_pca = pca_model.transform(X_val)
+    X_test_pca = pca_model.transform(X_test)
 
     return DatasetData(
-        test=[
-            ImageData(
-                data=pca.fit_transform(data.data),
-                label=data.label,
-            )
-            for data in dataset.test
-        ],
         train=[
-            ImageData(
-                data=pca.fit_transform(data.data),
-                label=data.label,
-            )
-            for data in dataset.train
+            ImageData(data=X_train_pca[i], label=y_train[i])
+            for i in range(len(y_train))
         ],
-        val=[
-            ImageData(
-                data=pca.fit_transform(data.data),
-                label=data.label,
-            )
-            for data in dataset.val
+        val=[ImageData(data=X_val_pca[i], label=y_val[i]) for i in range(len(y_val))],
+        test=[
+            ImageData(data=X_test_pca[i], label=y_test[i]) for i in range(len(y_test))
         ],
     )
 

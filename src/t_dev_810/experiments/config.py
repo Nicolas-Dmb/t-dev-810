@@ -53,11 +53,11 @@ def build_config() -> ExperimentConf | GridSearchConf:
             hypothesis=hypothesis,
         )
 
-    penalty = (
-        input("Penalty [l1/l2/elasticnet] (default l2): ").strip() or "l2"
-    )  # TODO enumerat all available values
+    penalty = input("Penalty [l1/l2/elasticnet] (default l2): ").strip() or "l2"
 
     solver = input("Solver (default liblinear): ").strip() or "liblinear"
+
+    max_iter = ask_int("Max iterations", 2000)
 
     l1_ratio = None
     if penalty == "elasticnet":
@@ -76,10 +76,11 @@ def build_config() -> ExperimentConf | GridSearchConf:
         enhance_factor=enhance_factor,
         crop_factor=crop_factor,
         model=Model.logistic_regression,
-        penalty=Penalty.elasticnet,  # TODO : find correct value
-        solver=Solver.liblinear,  # TODO
+        penalty=Penalty(penalty),
+        solver=Solver(solver),
         l1_ratio=l1_ratio,
         regularization_c=C,
         class_weight=class_weight,
         hypothesis=hypothesis,
+        max_iter=max_iter,
     )

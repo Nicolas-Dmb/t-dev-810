@@ -1,6 +1,7 @@
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Tuple
 
+import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 
@@ -16,7 +17,9 @@ from t_dev_810.data import (
     pca,
     resize_img,
 )
-from t_dev_810.features.transforms import flatten_image, to_numpy
+from t_dev_810.features.transforms import flatten_image
+from t_dev_810.models import evaluate_model, predict_model, train_model
+from t_dev_810.utils import save_result
 
 from .schema import ExperimentConf, GridSearchConf, Model
 
@@ -28,10 +31,20 @@ PreprocessStep = Callable[[DatasetFile], Any]
 
 
 def runner(experiment_conf: ExperimentConf | GridSearchConf):
+    print("Starting experiment, loading dataset...")
     dataset_file = load()
+    print("Dataset loaded, starting preprocessing...")
     processed_dataset = _preprocess(experiment_conf, dataset_file)
+    print("Dataset preprocessed, starting training...")
     if isinstance(experiment_conf, GridSearchConf):
-        gridsearch_runner(experiment_conf)
+        config_dict, result_dict = gridsearch_runner(experiment_conf, processed_dataset)
+    else:
+        config_dict, result_dict = experiment_runner(experiment_conf, processed_dataset)
+
+    print("Saving results...")
+    save_result(config_dict, result_dict, experiment_conf.model.value)
+    print("Experiment completed and results saved.")
+    print(f"Results: {result_dict}")
 
 
 def _preprocess(
@@ -97,25 +110,56 @@ def build_preprocess_pipeline(
     return pipeline
 
 
-def gridsearch_runner(experiment_conf: GridSearchConf, dataset: DatasetData):
+def gridsearch_runner(
+    experiment_conf: GridSearchConf, dataset: DatasetData
+) -> Tuple[dict[str, Any], dict[str, Any]]:
     match experiment_conf.model:
         case Model.logistic_regression:
             model = LogisticRegression()
         case _:
             raise NotImplementedError("model not implemented yet")
 
-    print("Performing grid search...")
     grid_search = GridSearchCV(model, experiment_conf.conf, cv=5, n_jobs=-1, verbose=3)
 
-    X, y = to_numpy(dataset.train + dataset.val)
+    model = train_model(grid_search, dataset)
+    y_test, y_pred = predict_model(model, dataset)
 
-    grid_search.fit(X, y)
-    print("Best parameters:", grid_search.best_params_)
+    best_params: dict[str, Any] = model.best_params_
+    config_dict: dict[str, Any] = experiment_conf.to_json(best_params)
+
+    result_dict = evaluate_model(
+        model=model,
+        X_train=np.array([train.data for train in dataset.train]),
+        y_train=[train.label for train in dataset.train],
+        X_test=np.array([test.data for test in dataset.test]),
+        y_test=y_test,
+        y_pred=y_pred,
+    )
+
+    return config_dict, result_dict
 
 
-def experiment_runner(experiment_conf: ExperimentConf, dataset: DatasetData) -> None:
+def experiment_runner(
+    experiment_conf: ExperimentConf, dataset: DatasetData
+) -> Tuple[dict[str, Any], dict[str, Any]]:
     match experiment_conf.model:
         case Model.logistic_regression:
             model = LogisticRegression(max_iter=experiment_conf.max_iter)
         case _:
             raise NotImplementedError("model not implemented yet")
+
+    config_dict = experiment_conf.to_json()
+
+    model = train_model(model, dataset)
+    y_test, y_pred = predict_model(model, dataset)
+
+    result_dict = evaluate_model(
+        model=model,
+        X_train=np.array([train.data for train in dataset.train]),
+        y_train=[train.label for train in dataset.train],
+        X_test=np.array([test.data for test in dataset.test]),
+        y_test=y_test,
+        y_pred=y_pred,
+    )
+
+    return config_dict, result_dict
