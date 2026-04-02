@@ -10,5 +10,5 @@
 
 ## 
 ```bash
-    python src/t_dev_810/experiments/runner.py run <experience_id>
+    python run main.py
 ```

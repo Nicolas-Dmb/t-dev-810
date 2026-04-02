@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict
 
 BASE_DIR = Path(__file__).resolve().parent.parent  # remonte de utils/ à t_dev_810/
 
@@ -27,3 +27,9 @@ def save_result(
         f.seek(0)
         f.truncate()
         json.dump(version_data, f, indent=4)
+
+
+def load_version_json() -> Dict[str, Any]:
+    """Load version.json."""
+    with open(VERSION_FILE, "r", encoding="utf-8") as file:
+        return json.load(file)

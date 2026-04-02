@@ -1180,6 +1180,39 @@
                 "test_auc": 0.8910804295419681
             },
             "model": "logistic_regression"
+        },
+        "2026-03-30T20:50:15.973318": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1.0,
+                "class_weight": false,
+                "max_iter": 2000,
+                "hypothesis": "first try to have result reference with default config"
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 153,
+                    "TN": 81,
+                    "FN": 5
+                },
+                "cv_auc_mean": 0.9883458263821152,
+                "cv_auc_std": 0.003177214490986896,
+                "recall": 0.9871794871794872,
+                "precision": 0.7156133828996283,
+                "f1_score": 0.8297413793103449,
+                "test_auc": 0.9052487398641244
+            },
+            "model": "logistic_regression"
         }
     }
 }
