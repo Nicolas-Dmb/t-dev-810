@@ -114,23 +114,24 @@ class GridSearchConf:
 LOGISTIC_REG_GRIDSEARCH_CONF = [
     {
         "solver": ["lbfgs"],
+        "penalty": ["l2"],
         "max_iter": [2000],
-        "l1_ratio": [0],
         "C": [0.01, 0.1, 1, 10],
         "class_weight": [None, "balanced"],
     },
     {
         "solver": ["liblinear"],
+        "penalty": ["l1", "l2"],
         "max_iter": [2000],
-        "l1_ratio": [0, 1],
         "C": [0.01, 0.1, 1, 10],
         "class_weight": [None, "balanced"],
     },
     # {
     #     "solver": ["saga"],
-    #     "max_iter": [6000],
-    #     "l1_ratio": [0, 0.5, 1],
-    #     "C": [0.01, 0.1, 1],
+    #     "penalty": ["elasticnet"],
+    #     "l1_ratio": [0.25, 0.5, 0.75],
+    #     "max_iter": [5000],
+    #     "C": [0.01, 0.1, 1, 10],
     #     "class_weight": [None, "balanced"],
     # },
 ]

@@ -1213,6 +1213,270 @@
                 "test_auc": 0.9052487398641244
             },
             "model": "logistic_regression"
+        },
+        "2026-04-27T09:45:46.269484": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": 150,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1.0,
+                "class_weight": false,
+                "max_iter": 2000,
+                "hypothesis": "Tried to reduce overfitting with reducing features with image size at 64 and use PCA components at 150"
+            },
+            "results": {
+                "accuracy": 0.7419871794871795,
+                "confusion_matrix": {
+                    "TP": 387,
+                    "FP": 158,
+                    "TN": 76,
+                    "FN": 3
+                },
+                "cv_auc_mean": 0.9858087887452346,
+                "cv_auc_std": 0.004070078144662997,
+                "recall": 0.9923076923076923,
+                "precision": 0.710091743119266,
+                "f1_score": 0.827807486631016,
+                "test_auc": 0.8972386587771204
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T09:58:37.325398": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 0.1,
+                "class_weight": false,
+                "max_iter": 2000,
+                "hypothesis": "Reducing the value of C will increase regularization strength, which should reduce overfitting by limiting model complexity."
+            },
+            "results": {
+                "accuracy": 0.7467948717948718,
+                "confusion_matrix": {
+                    "TP": 386,
+                    "FP": 154,
+                    "TN": 80,
+                    "FN": 4
+                },
+                "cv_auc_mean": 0.988558597463118,
+                "cv_auc_std": 0.0035192730326222246,
+                "recall": 0.9897435897435898,
+                "precision": 0.7148148148148148,
+                "f1_score": 0.8301075268817204,
+                "test_auc": 0.9105851413543722
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T10:10:17.231782": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1.0,
+                "class_weight": true,
+                "max_iter": 2000,
+                "hypothesis": "In this experiment, class_weight is set to \"balanced\" to address class imbalance.This is expected to reduce the number of false positives by penalizing mistakes on the minority class more strongly, leading to a better balance between precision and recall."
+            },
+            "results": {
+                "accuracy": 0.7628205128205128,
+                "confusion_matrix": {
+                    "TP": 383,
+                    "FP": 141,
+                    "TN": 93,
+                    "FN": 7
+                },
+                "cv_auc_mean": 0.9882057742369252,
+                "cv_auc_std": 0.00329314907037138,
+                "recall": 0.982051282051282,
+                "precision": 0.7309160305343512,
+                "f1_score": 0.838074398249453,
+                "test_auc": 0.9038242384396231
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T10:17:30.604099": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": 150,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1.0,
+                "class_weight": true,
+                "max_iter": 2000,
+                "hypothesis": "In this experiment, PCA is combined with class_weight=\"balanced\" to evaluate whether reducing the number of features improves model performance once class imbalance has been addressed."
+            },
+            "results": {
+                "accuracy": 0.7740384615384616,
+                "confusion_matrix": {
+                    "TP": 378,
+                    "FP": 129,
+                    "TN": 105,
+                    "FN": 12
+                },
+                "cv_auc_mean": 0.9855985543562562,
+                "cv_auc_std": 0.0037062660617837883,
+                "recall": 0.9692307692307692,
+                "precision": 0.7455621301775148,
+                "f1_score": 0.842809364548495,
+                "test_auc": 0.8963620425158886
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T10:25:53.082068": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 10,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1.0,
+                "class_weight": true,
+                "max_iter": 2000,
+                "hypothesis": "Improve the quality of the input signal rather than reducing the number of features, in order to increase precision without sacrificing recall."
+            },
+            "results": {
+                "accuracy": 0.7692307692307693,
+                "confusion_matrix": {
+                    "TP": 378,
+                    "FP": 132,
+                    "TN": 102,
+                    "FN": 12
+                },
+                "cv_auc_mean": 0.9819713699213082,
+                "cv_auc_std": 0.004392973849677629,
+                "recall": 0.9692307692307692,
+                "precision": 0.7411764705882353,
+                "f1_score": 0.84,
+                "test_auc": 0.874600043830813
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T13:44:55.437271": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1,
+                "class_weight": null,
+                "max_iter": 2000,
+                "hypothesis": "GridSearch to find optimal hyperparameters (solver, penalty, C, class_weight) with default preprocessing"
+            },
+            "results": {
+                "accuracy": 0.7483974358974359,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 152,
+                    "TN": 82,
+                    "FN": 5
+                },
+                "cv_auc_mean": 0.9880848971759365,
+                "cv_auc_std": 0.003224617500880957,
+                "recall": 0.9871794871794872,
+                "precision": 0.7169459962756052,
+                "f1_score": 0.8306364617044228,
+                "test_auc": 0.9043173350865659
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T17:11:56.530702": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 0,
+                "enhance_factor": 0,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1,
+                "class_weight": null,
+                "max_iter": 2000,
+                "hypothesis": "GridSearch with scoring='f1' to find optimal hyperparameters optimizing for F1-score instead of accuracy"
+            },
+            "results": {
+                "accuracy": 0.7483974358974359,
+                "confusion_matrix": {
+                    "TP": 385,
+                    "FP": 152,
+                    "TN": 82,
+                    "FN": 5
+                },
+                "cv_auc_mean": 0.9883525826509754,
+                "cv_auc_std": 0.0035704670681128295,
+                "recall": 0.9871794871794872,
+                "precision": 0.7169459962756052,
+                "f1_score": 0.8306364617044228,
+                "test_auc": 0.9043173350865659
+            },
+            "model": "logistic_regression"
+        },
+        "2026-04-27T17:26:02.259771": {
+            "envs": {
+                "image_size": 64,
+                "normalize": true,
+                "pca_components": null,
+                "crop_factor": 0,
+                "enhance_factor": 2,
+                "model": "logistic_regression",
+                "penalty": "l2",
+                "solver": "liblinear",
+                "l1_ratio": null,
+                "regularization_c": 1.0,
+                "class_weight": true,
+                "max_iter": 2000,
+                "hypothesis": "Test contrast enhancement (factor=2) with class_weight=balanced to improve input signal quality"
+            },
+            "results": {
+                "accuracy": 0.7516025641025641,
+                "confusion_matrix": {
+                    "TP": 383,
+                    "FP": 148,
+                    "TN": 86,
+                    "FN": 7
+                },
+                "cv_auc_mean": 0.9865095293015178,
+                "cv_auc_std": 0.0032451388286664318,
+                "recall": 0.982051282051282,
+                "precision": 0.7212806026365348,
+                "f1_score": 0.8317046688382194,
+                "test_auc": 0.8838483453868069
+            },
+            "model": "logistic_regression"
         }
     }
 }
