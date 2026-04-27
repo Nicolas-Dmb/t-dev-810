@@ -119,7 +119,7 @@ def gridsearch_runner(
         case _:
             raise NotImplementedError("model not implemented yet")
 
-    grid_search = GridSearchCV(model, experiment_conf.conf, cv=5, n_jobs=-1, verbose=3)
+    grid_search = GridSearchCV(model, experiment_conf.conf, cv=5, n_jobs=-1, verbose=3, scoring="f1")
 
     model = train_model(grid_search, dataset)
     y_test, y_pred = predict_model(model, dataset)
@@ -144,7 +144,14 @@ def experiment_runner(
 ) -> Tuple[dict[str, Any], dict[str, Any]]:
     match experiment_conf.model:
         case Model.logistic_regression:
-            model = LogisticRegression(max_iter=experiment_conf.max_iter)
+            model = LogisticRegression(
+                max_iter=experiment_conf.max_iter,
+                C=experiment_conf.regularization_c,
+                penalty=experiment_conf.penalty.value,
+                solver=experiment_conf.solver.value,
+                l1_ratio=experiment_conf.l1_ratio,
+                class_weight="balanced" if experiment_conf.class_weight else None,
+            )
         case _:
             raise NotImplementedError("model not implemented yet")
 

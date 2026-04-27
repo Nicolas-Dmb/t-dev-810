@@ -2,13 +2,17 @@
 
 ## Install deps
 ```bash
-    source .venv/bin/activate
+source .venv/bin/activate
 ```
 
-## Register experience
-
-
-## 
+## Run an experiment
 ```bash
-    python src/t_dev_810/experiments/runner.py run <experience_id>
+python main.py
 ```
+
+## Export the best model
+```bash
+python export.py
+```
+
+The model will be saved to `models/logistic_regression_balanced.joblib`.
