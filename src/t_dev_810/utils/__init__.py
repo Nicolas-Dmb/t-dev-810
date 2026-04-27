@@ -1,4 +1,4 @@
-from .io import save_result
+from .io import save_model, save_result
 from .utils import (
     display_distribution,
     display_experiment_from_json,
@@ -7,6 +7,7 @@ from .utils import (
 )
 
 __all__ = [
+    "save_model",
     "save_result",
     "display_distribution",
     "show_image_from_path",

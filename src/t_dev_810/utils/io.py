@@ -3,9 +3,13 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict
 
+import joblib
+
 BASE_DIR = Path(__file__).resolve().parent.parent  # remonte de utils/ à t_dev_810/
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 VERSION_FILE = BASE_DIR / "version.json"
+MODEL_DIR = PROJECT_ROOT / "models"
 
 
 def save_result(
@@ -33,3 +37,11 @@ def load_version_json() -> Dict[str, Any]:
     """Load version.json."""
     with open(VERSION_FILE, "r", encoding="utf-8") as file:
         return json.load(file)
+
+
+def save_model(model: Any, filename: str) -> Path:
+    """Save a trained model to the models/ directory."""
+    MODEL_DIR.mkdir(exist_ok=True)
+    filepath = MODEL_DIR / filename
+    joblib.dump(model, filepath)
+    return filepath
