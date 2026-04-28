@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Any, Callable, Tuple
 
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
 
@@ -21,7 +22,7 @@ from t_dev_810.features.transforms import flatten_image
 from t_dev_810.models import evaluate_model, predict_model, train_model
 from t_dev_810.utils import save_result
 
-from .schema import ExperimentConf, GridSearchConf, Model
+from .schema import ExperimentConf, GridSearchConf, Model, RandomForestExperimentConf
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
@@ -30,7 +31,7 @@ CSV_PATH = PROJECT_ROOT / "experiments.csv"
 PreprocessStep = Callable[[DatasetFile], Any]
 
 
-def runner(experiment_conf: ExperimentConf | GridSearchConf):
+def runner(experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf):
     print("Starting experiment, loading dataset...")
     dataset_file = load()
     print("Dataset loaded, starting preprocessing...")
@@ -38,6 +39,8 @@ def runner(experiment_conf: ExperimentConf | GridSearchConf):
     print("Dataset preprocessed, starting training...")
     if isinstance(experiment_conf, GridSearchConf):
         config_dict, result_dict = gridsearch_runner(experiment_conf, processed_dataset)
+    elif isinstance(experiment_conf, RandomForestExperimentConf):
+        config_dict, result_dict = rf_experiment_runner(experiment_conf, processed_dataset)
     else:
         config_dict, result_dict = experiment_runner(experiment_conf, processed_dataset)
 
@@ -48,7 +51,7 @@ def runner(experiment_conf: ExperimentConf | GridSearchConf):
 
 
 def _preprocess(
-    experiment_conf: ExperimentConf | GridSearchConf,
+    experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf,
     dataset_file: DatasetFile,
 ) -> DatasetData:
     pipeline: list[Callable[[DatasetFile], Any]] = build_preprocess_pipeline(
@@ -62,7 +65,7 @@ def _preprocess(
 
 
 def build_preprocess_pipeline(
-    experiment_conf: ExperimentConf | GridSearchConf,
+    experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf,
 ) -> list[PreprocessStep]:
     pipeline: list[PreprocessStep] = []
 
@@ -116,6 +119,8 @@ def gridsearch_runner(
     match experiment_conf.model:
         case Model.logistic_regression:
             model = LogisticRegression()
+        case Model.random_forest:
+            model = RandomForestClassifier(random_state=42)
         case _:
             raise NotImplementedError("model not implemented yet")
 
@@ -154,6 +159,36 @@ def experiment_runner(
             )
         case _:
             raise NotImplementedError("model not implemented yet")
+
+    config_dict = experiment_conf.to_json()
+
+    model = train_model(model, dataset)
+    y_test, y_pred = predict_model(model, dataset)
+
+    result_dict = evaluate_model(
+        model=model,
+        X_train=np.array([train.data for train in dataset.train]),
+        y_train=[train.label for train in dataset.train],
+        X_test=np.array([test.data for test in dataset.test]),
+        y_test=y_test,
+        y_pred=y_pred,
+    )
+
+    return config_dict, result_dict
+
+
+def rf_experiment_runner(
+    experiment_conf: RandomForestExperimentConf, dataset: DatasetData
+) -> Tuple[dict[str, Any], dict[str, Any]]:
+    model = RandomForestClassifier(
+        n_estimators=experiment_conf.n_estimators,
+        max_depth=experiment_conf.max_depth,
+        min_samples_split=experiment_conf.min_samples_split,
+        min_samples_leaf=experiment_conf.min_samples_leaf,
+        class_weight="balanced" if experiment_conf.class_weight else None,
+        random_state=42,
+        n_jobs=-1,
+    )
 
     config_dict = experiment_conf.to_json()
 
