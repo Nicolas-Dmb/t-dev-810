@@ -33,7 +33,6 @@ class RandomForestExperimentConf:
     min_samples_split: int
     min_samples_leaf: int
     class_weight: bool
-    hypothesis: str
 
     def to_json(self) -> Dict[str, Any]:
         return {
@@ -48,7 +47,6 @@ class RandomForestExperimentConf:
             "min_samples_split": self.min_samples_split,
             "min_samples_leaf": self.min_samples_leaf,
             "class_weight": self.class_weight,
-            "hypothesis": self.hypothesis,
         }
 
 
@@ -66,7 +64,6 @@ class ExperimentConf:
     regularization_c: float  # between 0 and 100
     class_weight: bool
     max_iter: int
-    hypothesis: str
 
     def to_json(self) -> Dict[str, Any]:
         return {
@@ -82,7 +79,6 @@ class ExperimentConf:
             "regularization_c": self.regularization_c,
             "class_weight": self.class_weight,
             "max_iter": self.max_iter,
-            "hypothesis": self.hypothesis,
         }
 
 
@@ -94,7 +90,6 @@ class GridSearchConf:
     pca_components: Optional[int]
     enhance_factor: int
     crop_factor: int
-    hypothesis: str
     conf: List[Dict[str, Any]]
 
     @staticmethod
@@ -104,7 +99,6 @@ class GridSearchConf:
         enhance_factor: int,
         pca: Optional[int],
         crop_factor: int,
-        hypothesis: str,
         model: Model = Model.logistic_regression,
     ) -> "GridSearchConf":
         gridsearch_conf: List[Dict[str, Any]]
@@ -124,7 +118,6 @@ class GridSearchConf:
             enhance_factor=enhance_factor,
             pca_components=pca,
             crop_factor=crop_factor,
-            hypothesis=hypothesis,
             conf=gridsearch_conf,
         )
 
@@ -136,29 +129,38 @@ class GridSearchConf:
             "crop_factor": self.crop_factor,
             "enhance_factor": self.enhance_factor,
             "model": self.model.value,
-            "hypothesis": self.hypothesis,
         }
 
         match self.model:
             case Model.logistic_regression:
-                base.update({
-                    "penalty": best_params.get("penalty"),
-                    "solver": best_params.get("solver"),
-                    "l1_ratio": best_params.get("l1_ratio"),
-                    "regularization_c": best_params.get("C"),
-                    "class_weight": best_params.get("class_weight"),
-                    "max_iter": best_params.get("max_iter"),
-                })
+                base.update(
+                    {
+                        "penalty": best_params.get("penalty"),
+                        "solver": best_params.get("solver"),
+                        "l1_ratio": best_params.get("l1_ratio"),
+                        "regularization_c": best_params.get("C"),
+                        "class_weight": best_params.get("class_weight"),
+                        "max_iter": best_params.get("max_iter"),
+                    }
+                )
             case Model.random_forest:
-                base.update({
-                    "n_estimators": best_params.get("n_estimators"),
-                    "max_depth": best_params.get("max_depth"),
-                    "min_samples_split": best_params.get("min_samples_split"),
-                    "min_samples_leaf": best_params.get("min_samples_leaf"),
-                    "class_weight": best_params.get("class_weight"),
-                })
+                base.update(
+                    {
+                        "n_estimators": best_params.get("n_estimators"),
+                        "max_depth": best_params.get("max_depth"),
+                        "min_samples_split": best_params.get("min_samples_split"),
+                        "min_samples_leaf": best_params.get("min_samples_leaf"),
+                        "class_weight": best_params.get("class_weight"),
+                    }
+                )
 
         return base
+
+
+@dataclass
+class Experiments:
+    experiments: List[ExperimentConf | RandomForestExperimentConf | GridSearchConf]
+    hypothesis: str
 
 
 LOGISTIC_REG_GRIDSEARCH_CONF = [

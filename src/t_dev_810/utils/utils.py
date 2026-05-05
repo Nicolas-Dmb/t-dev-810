@@ -5,7 +5,7 @@ import numpy as np
 from IPython.display import Markdown, display
 from PIL import Image
 
-from t_dev_810.data import DatasetFile
+from t_dev_810.data.schema import DatasetFile
 
 from .io import load_version_json
 
@@ -211,12 +211,193 @@ def plot_confusion_matrix(experiment: Dict[str, Any]) -> None:
     plt.show()
 
 
-def _display_experiment(experiment_id: str, experiment: Dict[str, Any]) -> None:
+def _old_display_experiment(experiment_id: str, experiment: Dict[str, Any]) -> None:
     """Display a full experiment summary with markdown and plots."""
     display_experiment_markdown(experiment_id, experiment)
     plot_experiment_metrics(experiment)
     plot_auc_comparison(experiment)
     plot_confusion_matrix(experiment)
+
+
+def _find_varying_params(results: List[Dict[str, Any]]) -> Dict[str, List[Any]]:
+    """Find config parameters that differ across experiments."""
+    configs = [r["config"] for r in results]
+    all_keys: set[str] = set()
+    for config in configs:
+        all_keys.update(config.keys())
+
+    varying: Dict[str, List[Any]] = {}
+    for key in sorted(all_keys):
+        values = [config.get(key) for config in configs]
+        if len(set(str(v) for v in values)) > 1:
+            varying[key] = values
+    return varying
+
+
+def _sweep_experiment_labels(
+    results: List[Dict[str, Any]], varying: Dict[str, List[Any]]
+) -> List[str]:
+    """Build short labels from varying params for each experiment."""
+    labels: List[str] = []
+    for i, r in enumerate(results):
+        parts = [f"{k}={_format_value(r['config'].get(k))}" for k in varying]
+        labels.append(", ".join(parts) if parts else f"Exp {i + 1}")
+    return labels
+
+
+def _build_sweep_markdown(experiment_id: str, experiment: Dict[str, Any]) -> str:
+    """Build a markdown comparison table for a sweep experiment."""
+    results = experiment["results"]
+    hypothesis = experiment.get("hypothesis", "N/A")
+    n = len(results)
+    varying = _find_varying_params(results)
+    labels = _sweep_experiment_labels(results, varying)
+
+    md = f"\n## Sweep — {experiment_id}\n\n"
+    md += f"### Hypothesis\n{hypothesis}\n\n"
+
+    # Config differences table
+    if varying:
+        header = "| Parameter | " + " | ".join(labels) + " |"
+        sep = "|---|" + "|".join("---" for _ in range(n)) + "|"
+        md += "### Configuration differences\n"
+        md += header + "\n" + sep + "\n"
+        for param, values in varying.items():
+            row = (
+                f"| **{param}** | "
+                + " | ".join(_format_value(v) for v in values)
+                + " |"
+            )
+            md += row + "\n"
+        md += "\n"
+
+    # Metrics comparison table
+    metric_keys = [
+        "accuracy",
+        "recall",
+        "precision",
+        "f1_score",
+        "test_auc",
+        "cv_auc_mean",
+    ]
+    metric_labels = [
+        "Accuracy",
+        "Recall",
+        "Precision",
+        "F1-score",
+        "Test AUC",
+        "CV AUC mean",
+    ]
+
+    header = "| Metric | " + " | ".join(labels) + " |"
+    sep = "|---|" + "|".join("---" for _ in range(n)) + "|"
+    md += "### Metrics comparison\n"
+    md += header + "\n" + sep + "\n"
+    for label, key in zip(metric_labels, metric_keys):
+        values = [r["metrics"].get(key) for r in results]
+        row = f"| **{label}** | " + " | ".join(_format_value(v) for v in values) + " |"
+        md += row + "\n"
+
+    # Best experiment by F1-score
+    f1_scores = [r["metrics"].get("f1_score", 0) for r in results]
+    best_idx = int(np.argmax(f1_scores))
+    md += (
+        f"\n**Best F1-score**: {labels[best_idx]}"
+        f" ({_format_value(f1_scores[best_idx])})\n"
+    )
+    return md
+
+
+def plot_sweep_metrics(experiment: Dict[str, Any]) -> None:
+    """Grouped bar chart comparing metrics across sweep experiments."""
+    results = experiment["results"]
+    n = len(results)
+    varying = _find_varying_params(results)
+    labels = _sweep_experiment_labels(results, varying)
+
+    metric_keys = ["accuracy", "recall", "precision", "f1_score", "test_auc"]
+    metric_labels = ["Accuracy", "Recall", "Precision", "F1-score", "Test AUC"]
+
+    x = np.arange(len(metric_labels))
+    width = 0.8 / n
+
+    fig, ax = plt.subplots(figsize=(12, 5))
+    for i, (result, label) in enumerate(zip(results, labels)):
+        values = [result["metrics"].get(m, 0) for m in metric_keys]
+        offset = (i - n / 2 + 0.5) * width
+        ax.bar(x + offset, values, width, label=label)
+
+    ax.set_ylabel("Score")
+    ax.set_title("Metrics Comparison")
+    ax.set_xticks(x)
+    ax.set_xticklabels(metric_labels)
+    ax.set_ylim(0, 1)
+    ax.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_sweep_roc_curves(experiment: Dict[str, Any]) -> None:
+    """Overlay ROC curves for all sweep experiments on a single plot."""
+    results = experiment["results"]
+    varying = _find_varying_params(results)
+    labels = _sweep_experiment_labels(results, varying)
+
+    plt.figure(figsize=(7, 6))
+    for result, label in zip(results, labels):
+        roc = result["metrics"].get("roc_curve")
+        if roc is None:
+            continue
+        auc = result["metrics"]["test_auc"]
+        plt.plot(roc["fpr"], roc["tpr"], label=f"{label} (AUC={auc:.3f})")
+
+    plt.plot([0, 1], [0, 1], "k--", alpha=0.4)
+    plt.xlabel("False Positive Rate")
+    plt.ylabel("True Positive Rate")
+    plt.title("ROC Curves Comparison")
+    plt.legend(loc="lower right")
+    plt.tight_layout()
+    plt.show()
+
+
+def plot_sweep_confusion_matrices(experiment: Dict[str, Any]) -> None:
+    """Side-by-side confusion matrices for each sweep experiment."""
+    results = experiment["results"]
+    n = len(results)
+    varying = _find_varying_params(results)
+    labels = _sweep_experiment_labels(results, varying)
+
+    fig, axes = plt.subplots(1, n, figsize=(5 * n, 4))
+    if n == 2:
+        axes = list(axes)
+    elif n == 1:
+        axes = [axes]
+
+    for ax, result, label in zip(axes, results, labels):
+        cm = result["metrics"]["confusion_matrix"]
+        matrix = np.array([[cm["TN"], cm["FP"]], [cm["FN"], cm["TP"]]])
+
+        ax.imshow(matrix)
+        ax.set_title(label, fontsize=9)
+        ax.set_xticks([0, 1])
+        ax.set_xticklabels(["Pred Normal", "Pred Pneumonia"], fontsize=8)
+        ax.set_yticks([0, 1])
+        ax.set_yticklabels(["Normal", "Pneumonia"], fontsize=8)
+        for r in range(2):
+            for c in range(2):
+                ax.text(c, r, matrix[r, c], ha="center", va="center")
+
+    plt.suptitle("Confusion Matrices")
+    plt.tight_layout()
+    plt.show()
+
+
+def _display_sweep(experiment_id: str, experiment: Dict[str, Any]) -> None:
+    """Display a sweep experiment with comparison tables and plots."""
+    display(Markdown(_build_sweep_markdown(experiment_id, experiment)))
+    plot_sweep_metrics(experiment)
+    plot_sweep_roc_curves(experiment)
+    plot_sweep_confusion_matrices(experiment)
 
 
 def get_experiment_by_id(
@@ -232,4 +413,24 @@ def display_experiment_from_json(experiment_id: str) -> None:
     """Load one experiment from JSON and display it."""
     version_data = load_version_json()
     experiment = get_experiment_by_id(version_data, experiment_id)
-    _display_experiment(experiment_id, experiment)
+    results = experiment.get("results")
+
+    if isinstance(results, list):
+        if len(results) == 1:
+            # New format, single experiment → adapt to old format display
+            single = results[0]
+            compat = {
+                "envs": {
+                    **single["config"],
+                    "hypothesis": experiment.get("hypothesis", ""),
+                },
+                "results": single["metrics"],
+                "model": single["model"],
+            }
+            _old_display_experiment(experiment_id, compat)
+        else:
+            # New format, multiple experiments → comparative display
+            _display_sweep(experiment_id, experiment)
+    else:
+        # Old format (results is a dict or missing)
+        _old_display_experiment(experiment_id, experiment)

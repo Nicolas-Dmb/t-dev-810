@@ -13,10 +13,9 @@ MODEL_DIR = PROJECT_ROOT / "models"
 
 
 def save_result(
-    config_dict: dict[str, Any],
-    result_dict: dict[str, Any],
-    model_name: str,
+    results: list[tuple[dict[str, Any], dict[str, Any], str]], hypothesis: str
 ) -> None:
+    """Save experiment results to version.json."""
     with open(VERSION_FILE, "r+") as f:
         file = f.read()
         if file.strip():
@@ -24,9 +23,15 @@ def save_result(
         else:
             version_data = {"versions": {}}
         version_data["versions"][datetime.now().isoformat()] = {
-            "envs": config_dict,
-            "results": result_dict,
-            "model": model_name,
+            "hypothesis": hypothesis,
+            "results": [
+                {
+                    "config": config_dict,
+                    "metrics": result_dict,
+                    "model": model,
+                }
+                for config_dict, result_dict, model in results
+            ],
         }
         f.seek(0)
         f.truncate()

@@ -1,7 +1,6 @@
 import sys
 
-from t_dev_810.experiments import build_config
-from t_dev_810.experiments.runner import runner
+from t_dev_810.experiments import build_config, runner
 
 
 def main():

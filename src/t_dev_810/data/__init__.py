@@ -1,4 +1,5 @@
 from .loader import DatasetFile as DatasetFile
+from .loader import DatasetImg as DatasetImg
 from .loader import load as load
 from .loader import load_image as load_image
 from .preprocessing import crop_dataset as crop_dataset
