@@ -1,14 +1,16 @@
 from pathlib import Path
-from typing import Any, Callable, Tuple
+from typing import Any, Callable, List, Tuple
 
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import GridSearchCV
+from tqdm import tqdm
 
 from t_dev_810.data import (
     DatasetData,
     DatasetFile,
+    DatasetImg,
     crop_dataset,
     data_splitting,
     enhance_constrast,
@@ -22,41 +24,66 @@ from t_dev_810.features.transforms import flatten_image
 from t_dev_810.models import evaluate_model, predict_model, train_model
 from t_dev_810.utils import save_result
 
-from .schema import ExperimentConf, GridSearchConf, Model, RandomForestExperimentConf
+from .schema import (
+    ExperimentConf,
+    Experiments,
+    GridSearchConf,
+    Model,
+    RandomForestExperimentConf,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 
 CSV_PATH = PROJECT_ROOT / "experiments.csv"
 
-PreprocessStep = Callable[[DatasetFile], Any]
+PreprocessStep = Callable[[Any], Any]
 
 
-def runner(experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf):
+def runner(config: Experiments):
     print("Starting experiment, loading dataset...")
+    dataset_split = _split_once()
+
+    results: List[Tuple[dict[str, Any], dict[str, Any], str]] = []
+    for experiment_conf in tqdm(config.experiments):
+        config_dict, result_dict, model = single_runner(experiment_conf, dataset_split)
+        results.append((config_dict, result_dict, model.value))
+
+    print("Saving results...")
+    save_result(results, config.hypothesis)
+
+    print("Experiment completed and results saved.")
+
+
+def _split_once() -> DatasetFile:
+    """Load paths and split once. Images are loaded per experiment."""
     dataset_file = load()
-    print("Dataset loaded, starting preprocessing...")
-    processed_dataset = _preprocess(experiment_conf, dataset_file)
+    return data_splitting(dataset_file)
+
+
+def single_runner(
+    experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf,
+    dataset_split: DatasetFile,
+) -> Tuple[dict[str, Any], dict[str, Any], Model]:
+    dataset_img = load_image(dataset_split)
+    processed_dataset = _preprocess(experiment_conf, dataset_img)
     print("Dataset preprocessed, starting training...")
     if isinstance(experiment_conf, GridSearchConf):
         config_dict, result_dict = gridsearch_runner(experiment_conf, processed_dataset)
     elif isinstance(experiment_conf, RandomForestExperimentConf):
-        config_dict, result_dict = rf_experiment_runner(experiment_conf, processed_dataset)
+        config_dict, result_dict = rf_experiment_runner(
+            experiment_conf, processed_dataset
+        )
     else:
         config_dict, result_dict = experiment_runner(experiment_conf, processed_dataset)
 
-    print("Saving results...")
-    save_result(config_dict, result_dict, experiment_conf.model.value)
-    print("Experiment completed and results saved.")
-    print(f"Results: {result_dict}")
+    return config_dict, result_dict, experiment_conf.model
 
 
 def _preprocess(
     experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf,
-    dataset_file: DatasetFile,
+    dataset_file: DatasetImg,
 ) -> DatasetData:
-    pipeline: list[Callable[[DatasetFile], Any]] = build_preprocess_pipeline(
-        experiment_conf
-    )
+    pipeline: list[PreprocessStep] = build_preprocess_pipeline(experiment_conf)
 
     for step in pipeline:
         dataset_file = step(dataset_file)
@@ -68,11 +95,6 @@ def build_preprocess_pipeline(
     experiment_conf: ExperimentConf | RandomForestExperimentConf | GridSearchConf,
 ) -> list[PreprocessStep]:
     pipeline: list[PreprocessStep] = []
-
-    pipeline.append(lambda dataset: data_splitting(dataset))
-
-    # Load dataset as images
-    pipeline.append(lambda dataset: load_image(dataset))
 
     pipeline.append(
         lambda dataset: resize_img(
@@ -124,7 +146,9 @@ def gridsearch_runner(
         case _:
             raise NotImplementedError("model not implemented yet")
 
-    grid_search = GridSearchCV(model, experiment_conf.conf, cv=5, n_jobs=-1, verbose=3, scoring="f1")
+    grid_search = GridSearchCV(
+        model, experiment_conf.conf, cv=5, n_jobs=-1, verbose=0, scoring="f1"
+    )
 
     model = train_model(grid_search, dataset)
     y_test, y_pred = predict_model(model, dataset)
