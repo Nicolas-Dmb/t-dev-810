@@ -1,6 +1,13 @@
 from typing import Optional
 
-from .schema import ExperimentConf, GridSearchConf, Model, Penalty, Solver
+from .schema import (
+    ExperimentConf,
+    GridSearchConf,
+    Model,
+    Penalty,
+    RandomForestExperimentConf,
+    Solver,
+)
 
 
 def ask_bool(question: str, default: bool = False) -> bool:
@@ -27,9 +34,15 @@ def ask_float(question: str, default: float) -> float:
     return float(answer) if answer else default
 
 
-def build_config() -> ExperimentConf | GridSearchConf:
+def build_config() -> ExperimentConf | RandomForestExperimentConf | GridSearchConf:
 
     print("\n===== Experiment configuration =====\n")
+
+    model_choice = (
+        input("Model [logistic_regression/random_forest] (default logistic_regression): ").strip()
+        or "logistic_regression"
+    )
+    model = Model(model_choice)
 
     image_size = ask_int("Image size", 64)
 
@@ -51,6 +64,16 @@ def build_config() -> ExperimentConf | GridSearchConf:
             crop_factor=crop_factor,
             enhance_factor=enhance_factor,
             hypothesis=hypothesis,
+            model=model,
+        )
+
+    if model == Model.random_forest:
+        return _build_rf_config(
+            image_size=image_size,
+            normalize=normalize,
+            pca_components=pca_components,
+            crop_factor=crop_factor,
+            enhance_factor=enhance_factor,
         )
 
     penalty = input("Penalty [l1/l2/elasticnet] (default l2): ").strip() or "l2"
@@ -83,4 +106,39 @@ def build_config() -> ExperimentConf | GridSearchConf:
         class_weight=class_weight,
         hypothesis=hypothesis,
         max_iter=max_iter,
+    )
+
+
+def _build_rf_config(
+    image_size: int,
+    normalize: bool,
+    pca_components: Optional[int],
+    crop_factor: int,
+    enhance_factor: int,
+) -> RandomForestExperimentConf:
+    n_estimators = ask_int("Number of trees (n_estimators)", 100)
+
+    max_depth = ask_opt_int("Max depth (None = unlimited)", None)
+
+    min_samples_split = ask_int("Min samples split", 2)
+
+    min_samples_leaf = ask_int("Min samples leaf", 1)
+
+    class_weight = ask_bool("Class weight balanced", False)
+
+    hypothesis = input("Experiment hypothesis: ").strip()
+
+    return RandomForestExperimentConf(
+        image_size=image_size,
+        normalize=normalize,
+        pca_components=pca_components,
+        crop_factor=crop_factor,
+        enhance_factor=enhance_factor,
+        model=Model.random_forest,
+        n_estimators=n_estimators,
+        max_depth=max_depth,
+        min_samples_split=min_samples_split,
+        min_samples_leaf=min_samples_leaf,
+        class_weight=class_weight,
+        hypothesis=hypothesis,
     )

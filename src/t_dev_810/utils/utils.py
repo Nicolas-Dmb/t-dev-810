@@ -106,8 +106,8 @@ def _build_experiment_markdown(experiment_id: str, experiment: Dict[str, Any]) -
     results = experiment["results"]
     confusion_matrix = results["confusion_matrix"]
 
-    return f"""
-## 🧪 Experiment — {experiment_id}
+    base = f"""
+## Experiment — {experiment_id}
 
 ### Hypothesis
 {envs["hypothesis"]}
@@ -119,15 +119,26 @@ def _build_experiment_markdown(experiment_id: str, experiment: Dict[str, Any]) -
 - **Crop factor**: {_format_value(envs["crop_factor"])}
 - **Enhance factor**: {_format_value(envs["enhance_factor"])}
 - **Model**: {_format_value(envs["model"])}
-- **Penalty**: {_format_value(envs["penalty"])}
-- **Solver**: {_format_value(envs["solver"])}
-- **L1 ratio**: {_format_value(envs["l1_ratio"])}
-- **Regularization C**: {_format_value(envs["regularization_c"])}
-- **Class weight**: {_format_value(envs["class_weight"])}
-- **Max iter**: {_format_value(envs["max_iter"])}
-
-### Results
 """
+
+    if envs.get("model") == "random_forest":
+        base += f"""- **N estimators**: {_format_value(envs.get("n_estimators"))}
+- **Max depth**: {_format_value(envs.get("max_depth"))}
+- **Min samples split**: {_format_value(envs.get("min_samples_split"))}
+- **Min samples leaf**: {_format_value(envs.get("min_samples_leaf"))}
+- **Class weight**: {_format_value(envs.get("class_weight"))}
+"""
+    else:
+        base += f"""- **Penalty**: {_format_value(envs.get("penalty"))}
+- **Solver**: {_format_value(envs.get("solver"))}
+- **L1 ratio**: {_format_value(envs.get("l1_ratio"))}
+- **Regularization C**: {_format_value(envs.get("regularization_c"))}
+- **Class weight**: {_format_value(envs.get("class_weight"))}
+- **Max iter**: {_format_value(envs.get("max_iter"))}
+"""
+
+    base += "\n### Results\n"
+    return base
 
 
 def display_experiment_markdown(experiment_id: str, experiment: Dict[str, Any]) -> None:
