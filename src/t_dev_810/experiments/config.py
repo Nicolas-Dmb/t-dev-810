@@ -11,8 +11,6 @@ from .schema import (
     Solver,
 )
 
-# Parameters available for sweep, with their parser.
-# "opt_int" means Optional[int] (accepts "None").
 SWEEP_PARAMS: dict[str, type | str] = {
     "image_size": int,
     "pca_components": "opt_int",
@@ -51,21 +49,14 @@ def ask_float(question: str, default: float) -> float:
     return float(answer) if answer else default
 
 
-# ── Main entry point ─────────────────────────────────────────────────
-
-
 def build_config() -> Experiments:
     hypothesis = input("Experiment hypothesis: ").strip()
 
-    mode = (
-        input("Mode [single/sweep] (default single): ").strip().lower()
-        or "single"
-    )
+    mode = input("Mode [single/sweep] (default single): ").strip().lower() or "single"
 
     if mode == "sweep":
         return _build_sweep_config(hypothesis)
 
-    # single / manual multi mode
     experiments: list[ExperimentConf | RandomForestExperimentConf | GridSearchConf] = []
     while True:
         config = build_single_config()
@@ -75,9 +66,6 @@ def build_config() -> Experiments:
         if not ask_bool("Do you want to add another experiment?", False):
             break
     return Experiments(experiments=experiments, hypothesis=hypothesis)
-
-
-# ── Sweep config builder ─────────────────────────────────────────────
 
 
 def _parse_sweep_value(raw: str, type_hint: type | str) -> Any:
@@ -127,9 +115,6 @@ def _build_sweep_config(hypothesis: str) -> Experiments:
 
     print(f"\n→ {len(configs)} experiments generated (sweep on {param_name})")
     return Experiments(experiments=configs, hypothesis=hypothesis)
-
-
-# ── Single config builders ────────────────────────────────────────────
 
 
 def build_single_config() -> (
